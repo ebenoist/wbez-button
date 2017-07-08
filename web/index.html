@@ -8,10 +8,9 @@
     <link rel="stylesheet" href="styles.css">
     <script src="/main.js"></script>
   </head>
-  <body>
-
-    <a href="#" class="button" onclick="WBEZ.play()">
-      <span>WBEZ</span>
+  <body onload="WBEZ.onLoad()">
+    <a href="#" class="button" onclick="WBEZ.onClick()">
+      <span id="status">WBEZ</span>
     </a>
   </body>
 </html>

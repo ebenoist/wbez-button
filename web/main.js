@@ -1,20 +1,33 @@
-(function() {
-  var playing = false;
-  var play = function() {
-    if (playing) {
-      fetch('/stop').then(function() {
-        playing = false;
-      });
+(function(window, document) {
+  var status = 'stopped';
+
+  var setStatus = function(body) {
+    document.querySelector('#status').innerText = 'WBEZ: '+ body;
+    status = body;
+  };
+
+  var onLoad = function() {
+    fetch('/status').then(function(resp) {
+      return resp.text();
+    }).then(setStatus);
+  }
+
+  var onClick = function() {
+    if (status === 'streaming') {
+      fetch('/stop').then(function(resp) {
+        return resp.text();
+      }).then(setStatus);
     }
 
-    if (!playing) {
-      fetch('/play').then(function() {
-        playing = true;
-      });
+    if (status === 'stopped') {
+      fetch('/play').then(function(resp) {
+        return resp.text();
+      }).then(setStatus);
     }
   }
 
   window.WBEZ = {
-    play: play,
+   onClick: onClick,
+   onLoad: onLoad,
   };
-})(window)
+})(window, document)
